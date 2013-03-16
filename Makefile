@@ -1,2 +1,2 @@
-rp2_em.so: rp2_em_fwave.f90
+maxwell_2d.so: maxwell_2d_fwave.f90
 	f2py -m $(basename $(notdir $@)) -c $^
