@@ -33,11 +33,10 @@ def setplot(plotdata):
     plotaxes.xlimits = 'auto'
     plotaxes.ylimits = 'auto'
     plotaxes.title = 'q[1]'
-    plotaxes.afteraxes = "pylab.axis('scaled')" 
 
     # Set up for item on these axes:
     plotitem = plotaxes.new_plotitem(plot_type='2d_pcolor')
-    plotitem.plot_var = 2
+    plotitem.plot_var = refind
     plotitem.pcolor_cmap = colormaps.yellow_red_blue
     plotitem.pcolor_cmin = 0.0
     plotitem.pcolor_cmax = 2.0
@@ -80,4 +79,7 @@ def setplot(plotdata):
 
     return plotdata
 
-    
+def refind(current_data):
+    "Return refractive index"
+    n = current_data.aux[0,:,:]
+    return n

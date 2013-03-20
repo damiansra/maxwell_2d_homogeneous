@@ -80,7 +80,6 @@
         vim     = 1.0 / dsqrt(eta1im * eta2im)
         zi      = dsqrt(eta1i / eta2i)
         zim     = dsqrt(eta1im / eta2im)
-
 !   # flux difference
         
         dq(1) = q1i/eta1i - q1im/eta1im

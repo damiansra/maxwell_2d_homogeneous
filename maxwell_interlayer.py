@@ -7,7 +7,7 @@ import numpy as np
 
 # excitation - initial conditoons
 ex_type  = 'plane'
-alambda  = 1 				# wavelength
+alambda  = 0.1 				# wavelength
 t_ex_sig = 1.0*alambda			# width in time (pulse only)
 x_ex_sig = 1.0*alambda			# width in the x-direction (pulse)
 toff_ex  = 0.0 					# offset in time
@@ -15,7 +15,7 @@ xoff_ex	 = 0.02    				# offset in the x-direction
 yoff_ex	 = 0.5 					# offset in the y -direction
 omega 	 = 2.0*np.pi/alambda	# frequency
 k 		 = 2.0*np.pi*alambda
-amp_Ex	 = 0.
+amp_Ex	 = 1.
 amp_Ey	 = 1.
 amp_Hz	 = 1.
 
@@ -49,9 +49,8 @@ atampu 		= deltan*(2.0*1.5+deltan)
 # multilayered definition
 N_la 		= 10 			
 N_lb 		= N_la -1
-
-t_la		= 0.015
-t_lb		= 0.050
+t_la		= 0.0015
+t_lb		= 0.0050
 la_e 		= 2.5
 la_m 		= 2.5
 lb_e 		= 1.0
@@ -65,14 +64,14 @@ kx_ex = k
 ky_ex = 0.0
 
 # Grid - mesh settings
-x_lower=0.; x_upper=100.; mx = np.floor(50*(x_upper-x_lower)/alambda)
+x_lower=0.; x_upper=10.; mx = np.floor(50*(x_upper-x_lower)/alambda)
 
 y_lower=0
 if rip_shape=='interlayered':
 	y_upper 	= N_la*t_la + N_lb*t_lb
 	y_ex_sig 	= 0.95*y_upper
-	my 			= np.floor((y_upper-y_lower)*1000)
-	mlp 		= (t_la+t_lb)*1000
+	my 			= np.floor((y_upper-y_lower)*10000)
+	mlp 		= (t_la+t_lb)*10000
 else:
 	y_upper 	= 1
 	y_ex_sig  	= x_ex_sig
@@ -113,8 +112,8 @@ def refind(t,X,Y):
 		deps[0,:,:] = lb_e
 		deps[1,:,:] = lb_m
 		for m in range(0,N_la):
-			deps[0,:,m*mlp:m*mlp+(t_la*1000)] = la_e
-			deps[1,:,m*mlp:m*mlp+(t_la*1000)] = la_m
+			deps[0,:,m*mlp:m*mlp+(t_la*10000)] = la_e
+			deps[1,:,m*mlp:m*mlp+(t_la*10000)] = la_m
 
 
 
@@ -210,14 +209,14 @@ def qinit(state):
 
 # -------- MAIN SCRIPT --------------
 
-def em2D(kernel_language='Fortran',iplot=False,htmlplot=False,use_petsc=True,save_outdir='./_output',solver_type='sharpclaw',model='isotropic'):
+def em2D(kernel_language='Fortran',iplot=False,htmlplot=False,use_petsc=True,save_outdir='./_output',solver_type='sharpclaw'):
 
 	if use_petsc:
 		import clawpack.petclaw as pyclaw
 	else:
 		from clawpack import pyclaw
 
-	print y_upper,mx,my
+	print v,y_upper,mx,my
 
 #	Solver settings
 	if solver_type=='classic':
@@ -230,8 +229,8 @@ def em2D(kernel_language='Fortran',iplot=False,htmlplot=False,use_petsc=True,sav
 		solver.weno_order = 5
 
 
-	solver.dt_initial=0.005
-	solver.max_steps = 1000000
+#	solver.dt_initial=0.005
+#	solver.max_steps = 1000000
 	import maxwell_2d
 	solver.rp = maxwell_2d
 
@@ -280,7 +279,7 @@ def em2D(kernel_language='Fortran',iplot=False,htmlplot=False,use_petsc=True,sav
 	claw = pyclaw.Controller()
 	claw.keep_copy = True
 	claw.tfinal = 2
-	claw.num_output_times = 20
+	claw.num_output_times = 10
 	claw.solver = solver
 	claw.solution = pyclaw.Solution(state,domain)
 	claw.outdir = save_outdir
