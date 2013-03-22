@@ -154,7 +154,7 @@ def etar(t,X,Y):
 		eta[1,:,:] = 1*(x<x_change) + 4*(x>=x_change)
 		eta[2,:,:] = 0.
 		eta[3,:,:] = 0.
-	elif mat_shape=='interfacey'
+	elif mat_shape=='interfacey':
 		yy = y_upper-y_lower
 		eta[0,:,:] = 1*(y<yy/2) + 4*(x>=yy/2)
 		eta[1,:,:] = 1*(y<yy/2) + 4*(x>=yy/2)
