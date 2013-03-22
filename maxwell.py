@@ -188,7 +188,7 @@ def update_aux(solver,state):
 	
 #	next function might be redundant since it already exists as deltan	
 def setaux(t,x,y):
-	aux = np.empty( [2,len(y),len(x)], order='F')
+	aux = np.empty( [4,len(y),len(x)], order='F')
 	aux = etar(t,x,y)
 	return aux
 
@@ -297,7 +297,7 @@ def em2D(kernel_language='Fortran',iplot=False,htmlplot=False,use_petsc=True,sav
 
 #	define number of waves (eqn) and aux (eps,mu)
 	num_eqn = 3
-	num_aux = 2
+	num_aux = 4
 
 #	abstract domain and state setup
 	x_dime = pyclaw.Dimension('x',x_lower,x_upper,mx)
