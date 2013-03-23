@@ -272,9 +272,9 @@ def qinit(state):
 		dd2 = y_upper-y_lower
 		sdd = dd1/20
 		r2 = (x-dd1/2)**2 + (y-dd2/2)**2
-		state.q[0,:,:] = 0.
-		state.q[1,:,:] = 0.
-		state.q[2,:,:] = np.exp(-r2/sdd**2)
+		state.q[0,:,:] = 0.*eo
+		state.q[1,:,:] = 0.*eo
+		state.q[2,:,:] = np.exp(-r2/sdd**2)*mo
 	else:
 		state.q[0,:,:] = 0.0
 		state.q[1,:,:] = 0.0
